@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using OpenAI_API.Chat;
 
@@ -8,6 +9,7 @@ namespace Server.Controllers;
 [Route("[controller]")]
 public class QueryController : ControllerBase
 {
+    private static readonly Regex CommandRegex = new(@"\s+<\|cmd:(\/[\w]+)\|>", RegexOptions.Compiled);
     private readonly Conversation _conversation;
 
     public QueryController(Conversation conversation)
@@ -26,7 +28,7 @@ public class QueryController : ControllerBase
                 context.Append("User Name: ");
                 context.Append(payload.CharacterFirstName);
                 context.Append('\n');
-                
+
                 if (payload.ActiveDutyName != null) {
                     context.Append("Context: in duty: ");
                     context.Append(payload.ActiveDutyName);
@@ -39,12 +41,23 @@ public class QueryController : ControllerBase
             } else {
                 context.Append("User is not logged in\n");
             }
-            
+
             context.Append("Query: ");
             context.Append(payload.Query);
 
             _conversation.AppendUserInput(context.ToString());
             var response = await _conversation.GetResponseFromChatbot();
+
+            // if response matches command regex, return command as well - strip it out from the response payload
+            var match = CommandRegex.Match(response);
+            if (match.Success) {
+                return new QueryResponsePayload
+                {
+                    Success = true,
+                    Response = response.Substring(0, match.Index),
+                    Command = match.Groups[1].Value
+                };
+            }
 
             return new QueryResponsePayload
             {
