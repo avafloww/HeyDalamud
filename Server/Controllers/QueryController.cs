@@ -9,7 +9,7 @@ namespace Server.Controllers;
 [Route("[controller]")]
 public class QueryController : ControllerBase
 {
-    private static readonly Regex CommandRegex = new(@"\s+<\|cmd:(\/[\w]+)\|>", RegexOptions.Compiled);
+    private static readonly Regex CommandRegex = new(@"[\s\n]*<\|cmd:(\/[\w]+)\|>", RegexOptions.Compiled);
     private readonly Conversation _conversation;
 
     public QueryController(Conversation conversation)
