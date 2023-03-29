@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: /Dockerfile
+          file: ./Server/Dockerfile
           push: true
           tags: ghcr.io/avafloww/hey-dalamud-server:latest
       - name: Deploy to production server
