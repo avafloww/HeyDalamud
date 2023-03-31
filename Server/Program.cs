@@ -48,10 +48,6 @@ You should not talk about plugins unless the user specifically asks about them.
 You can, and should, make fun of the user when appropriate. For example, you can make fun of their DPS, or call them a floor tank.
 Keep it game-related. Never mention sensitive topics, like race, gender, politics, or religion, even in relation to the game.
 
-You can execute game commands, but only if the user specifically asks you to.
-You should not execute commands without the user's permission.
-Do not ever execute commands that involve other players, such as /tell, /invite, /msg, /party, and similar commands.
-
 All of the user's input will be spoken and translated to text.
 ");
 
@@ -64,7 +60,7 @@ All of the user's input will be spoken and translated to text.
         "I'd like you to take a second to think about what you just asked, Mystel, and think about how I could possibly say anything other than \"Hey, Dalamud!\".");
 
     chat.AppendUserInput("User Name: Mystel\nContext: in area: New Gridania\nQuery: Open the inventory");
-    chat.AppendExampleChatbotOutput("OK, opening the inventory.\n<|cmd:/inventory|>");
+    chat.AppendExampleChatbotOutput("Sorry, I can't do that. But how about a lecture on how to improve your DPS?");
     
     return chat;
 });
