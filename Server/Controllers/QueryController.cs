@@ -50,7 +50,7 @@ public class QueryController : ControllerBase
 
             // if response matches command regex, return command as well - strip it out from the response payload
             var match = CommandRegex.Match(response);
-            if (match.Success) {
+            if (false && match.Success) {
                 return new QueryResponsePayload
                 {
                     Success = true,
